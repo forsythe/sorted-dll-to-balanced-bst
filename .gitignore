@@ -1,0 +1,13 @@
+#################  
+## Code::Blocks (with sdl)
+#################  
+ 
+*.layout
+*.a
+*.depend
+*.cbp
+*.o
+*.out
+*.exe
+/bin
+/obj
