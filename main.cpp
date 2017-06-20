@@ -96,12 +96,47 @@ node* dll_to_balanced_bst(node* start, int len){
     return root;
 }
 
+node* morris_in_order_traversal(node* root){
+    node* cur = root;
+    node* predecessor = NULL;
+    while (cur != NULL){
+        if (cur->prev == NULL){
+            cout << cur->val << " ";
+            cur = cur->next;
+        } else {
+            //get in order predecessor
+            predecessor = cur->prev;
+            while (predecessor->next != NULL && predecessor->next != cur)
+                predecessor = predecessor->next;
+
+            if (predecessor->next){ //predecessor->next can ONLY be cur
+                predecessor->next = NULL;
+                cout << cur->val << " ";
+                cur = cur->next;
+            } else {
+                predecessor->next = cur;
+                cur = cur->prev;
+            }
+        }
+    }
+}
+
+
 int main()
 {
     int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     node* dll = arr_to_dll(arr, sizeof(arr)/sizeof(int));
+    node* dll2 = arr_to_dll(arr, sizeof(arr)/sizeof(int));
+
     cout << "DLL: "; print_dll(dll);
     cout << "Tree: " << endl;
     print_tree(dll_to_balanced_bst(dll, get_len(dll)));
+    cout << "Morris pre-order traversal: " << endl;
+
+    node* tree = dll_to_balanced_bst(dll2, get_len(dll2));
+    morris_in_order_traversal(tree);
+    cout << endl;
+    morris_in_order_traversal(tree);
+
     return 0;
 }
